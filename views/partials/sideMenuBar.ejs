@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialLoop</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Rubik", sans-serif;
+        }
+
+        .leftSideMenuBar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 1px solid rgba(0, 0, 0, 0.187);
+            width: 20vw;
+            height: 100vh;
+            align-items: center;
+            padding: 2rem 1rem;
+            transition: all 0.4s ease-in-out;
+            transition-delay: 0.3s;
+            background-color: white;
+            position: fixed;
+        }
+
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            list-style: none;
+            align-items: flex-start;
+            padding: 10px;
+        }
+
+        .menu-links a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .menu-links li {
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .menu-links span {
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .login {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+
+        .login a {
+            padding: 0.4rem 1rem;
+            background-color: black;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 400;
+
+        }
+
+        .hamburger {
+            display: none;
+            justify-content: space-between;
+            padding: 2rem 2rem;
+        }
+
+        .hamburger span {
+            font-size: 2rem;
+            cursor: pointer;
+            font-weight: 600;
+            rotate: 180deg;
+        }
+
+        @media(width <=900px) {
+
+            .login {
+                gap: 5px;
+            }
+
+            .login a {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+
+        @media(width <=700px) {
+            .leftSideMenuBar {
+                position: fixed;
+                left: -200px;
+                width: 200px;
+                overflow: hidden;
+                z-index: 99;
+            }
+
+            .slidingMenu {
+                left: 0px;
+            }
+
+            .hamburger {
+                width: 100vw;
+                background-color: white;
+                display: flex;
+                position: fixed;
+                top: 0;
+                z-index: 1;
+                padding: 1rem;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.139);
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <section class="leftSideMenuBar">
+        <div class="logo">
+            <h2>SocialLoop</h2>
+        </div>
+        <div class="menu">
+            <ul class="menu-links">
+                <li><span class="material-symbols-outlined">home</span><a href="/">Home</a></li>
+                <li id="create"><span class="material-symbols-outlined">add_circle</span><a href="/user/post/create">Create</a></li>
+                <li><span class="material-symbols-outlined">person</span><a href="/user/profile">Profile</a></li>
+                <li><span class="material-symbols-outlined">person_add</span><a href="/user/suggestion">Add users</a></li>
+            </ul>
+        </div>
+        <div class="login">
+            <% if(locals.user){ %>
+                    <a href="/user/logout">Logout</a>
+            <%}else{ %>
+                <a href="/user/signin">Login</a>
+                <a href="/user/signup">SignUp</a>
+            <% } %>
+            
+
+        </div>
+
+    </section>
+    <div class="hamburger">
+        <h2 class="logo-Parmanent">SocialLoop</h2>
+        <span class="material-symbols-outlined">menu_open</span>
+    </div>
+</body>
+
+<script>
+    const leftSideMenuBar = document.querySelector('.leftSideMenuBar');
+    const hamburger = document.querySelector('.hamburger span');
+    const slidingMenu = document.querySelector('.slidingMenu');
+
+    hamburger.addEventListener('click', () => {
+        leftSideMenuBar.classList.toggle('slidingMenu');
+    });
+
+
+</script>
+
+</html>

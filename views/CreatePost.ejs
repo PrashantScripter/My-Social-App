@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+
+    <style>
+        * {
+            margin: auto;
+            padding: auto;
+            box-sizing: border-box;
+        }
+
+        .createPostArea {
+            /* background-color: rgb(222, 146, 46); */
+            height: 100vh;
+            width: 80vw;
+            display: flex;
+            margin-left: auto;
+        }
+
+        .createPost {
+            display: flex;
+            /* background-color: aqua; */
+            width: 70%;
+            height: 60%;
+            margin: auto;
+            box-shadow: 0px 0px 1px 0px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .createPost form {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .postImage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 50%;
+            position: relative;
+        }
+
+        .postImage img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .postImage input[type="file"] {
+            display: none;
+
+        }
+
+        .postImage .custom-file-upload {
+            display: inline-block;
+            position: absolute;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            background-color: black;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            top: 50%;
+        }
+
+        .descriptionArea {
+            /* background-color: yellow; */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 50%;
+            border-left: 1px solid rgba(0, 0, 0, 0.187);
+        }
+
+        .descriptionArea p {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.187);
+            padding: 10px;
+            text-align: center;
+        }
+
+        .descriptionArea textarea {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.187);
+            resize: none;
+            padding: 10px;
+            outline: none;
+        }
+
+        .descriptionArea button {
+            padding: 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        @media(max-width:800px) {
+
+            .createPost {
+                height: 500px;
+                width: 400px;
+            }
+
+            .createPost form {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .postImage {
+                width: 100%;
+                height: 60%;
+            }
+
+            .descriptionArea {
+                width: 100%;
+                height: 40%;
+            }
+
+            .descriptionArea p{
+                border-top: 1px solid rgba(0, 0, 0, 0.156);
+                font-size: 0.8rem;
+            }
+        }
+
+        @media(max-width:700px) {
+            .createPostArea {
+                width: 100%;
+            }
+
+            .createPost {
+                height: 60vh;
+                margin-top: 6.5rem;
+            }
+
+            .descriptionArea textarea {
+                border-bottom: none;
+            }
+        }
+
+        @media(max-width:600px) {
+            .createPost {
+                width: 70%;
+                height: 60%;
+            }
+
+            .descriptionArea p {
+                padding: 5px;
+            }
+
+        }
+
+        @media(max-width:450px) {
+            .createPost {
+                width: 98%;
+            }
+
+            .descriptionArea p{
+                border-top: 1px solid rgba(2, 2, 2, 0.174);
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <%-include( './partials/sideMenuBar',{user}) %>
+        <section class="createPostArea">
+            <div class="createPost">
+                <form action="/user/post/create" method="post" enctype="multipart/form-data">
+                    <div class="postImage">
+                        <label for="postImage" class="custom-file-upload" id="uploadLabel">Choose File</label>
+                        <input type="file" name="postImage" id="postImage" accept="image/*">
+                        <img src="" alt="" id="previewImage">
+                    </div>
+
+                    <div class="descriptionArea">
+                        <div>
+                            <p>Create post</p>
+                            <textarea name="description" id="" placeholder="Write about post" rows="3"></textarea>
+                        </div>
+                        <button type="submit">Post</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <script>
+            const fileInput = document.querySelector('#postImage');
+            const previewImage = document.getElementById('previewImage');
+            const uploadLabel = document.getElementById('uploadLabel');
+
+
+            fileInput.addEventListener('change', function (e) {
+                const file = e.target.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block';
+                        uploadLabel.style.display = 'none';
+                    };
+
+                    reader.readAsDataURL(file); 
+                } else {
+                    previewImage.style.display = 'none';
+                    uploadLabel.style.display = 'block';
+                }
+            });
+        </script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Users</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+
+        .allUnfollowedUserList {
+            /* background-color: yellow; */
+            display: flex;
+            margin-left: auto;
+            height: 100vh;
+            width: 80vw;
+        }
+
+        .users {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            /* background-color: aquamarine; */
+            padding: 3rem 0rem;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            height: 100%;
+            overflow-y: scroll;
+        }
+
+        .users::-webkit-scrollbar {
+            display: none;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            width: 60%;
+            margin: 0px auto;
+            padding:5px;
+            border-radius: 5px;
+            justify-content: space-between;
+            box-shadow: 0px 0px 1px 0px;
+        }
+
+        .user form button,
+        .user a {
+            padding: 5px 10px;
+            text-decoration: none;
+            color: white;
+            background-color: black;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .userImg {
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+        }
+
+        .userImg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media(max-width: 1024px) {
+            .user {
+                width: 90%;
+            }
+        }
+
+        @media(max-width: 700px) {
+            .allUnfollowedUserList {
+                width: 100vw;
+            }
+
+            .users {
+                width: 70%;
+                padding-top: 8rem;
+            }
+        }
+
+        @media(max-width:500px) {
+            .users {
+                width: 100%;
+            }
+
+            .user{
+                gap: 5px;
+                width: 98%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('./partials/sideMenuBar',{user}) %>
+        <section class="allUnfollowedUserList">
+            <div class="users">
+                <% allUsers.forEach(function(User){ %>
+                    <div class="user">
+                        <div class="userImg">
+                            <img src="../images/user.png" alt="">
+                        </div>
+                        <p>
+                            <%= User.name %>
+                        </p>
+                        <%if(User._id !=user){%>
+                                <form action="/user/follow/<%=User._id %>" method="post">
+                                    <% const isFollowing = loggedInUser.following.some(followedUser => followedUser.toString() === User._id.toString()); %>
+                                    <% if(isFollowing){ %>
+                                        <button type="submit" style="background-color: rgb(220, 220, 220); color: black; border: none;">Unfollow</button>
+                                    <% }else{ %>
+                                    <% const isYourFollower = loggedInUser.followers.some(yourFollower => yourFollower.toString() === User._id.toString()); %>
+                                    <%  if(isYourFollower){ %>
+                                            <button type="submit">Follow Back</button>
+                                    <%  }else{ %>
+                                            <button type=" submit" style="padding: 5px 15.5px;">Follow</button>
+                                    <%  } %>
+                                    <% } %>
+                                </form>
+                            <%}else{%>
+                                <a href="/user/profile"
+                                    style="background-color: rgb(220, 220, 220); color: black;">Profile</a>
+                            <%}%>
+                    </div>
+                    <% }) %>
+            </div>
+        </section>
+
+        <script>
+
+        </script>
+</body>
+
+</html>

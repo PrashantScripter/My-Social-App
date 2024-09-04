@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update user</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            /* background-color: bisque; */
+            background-color: rgba(0, 0, 0, 0.357);
+            position: relative;
+        }
+
+        .backIcon{
+            position: absolute;
+            right:10px;
+            top: 10px;
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .updateUser {
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid rgba(0, 0, 0, 0.16);
+            width: 50vw;
+            display: flex;
+            margin: auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0px 0px 1px 0px;
+        }
+
+        .userImage img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #ccc;
+            transition: border-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .userImage img:hover {
+            border-color: black;
+        }
+
+        .userImage {
+            display: inline-block;
+            cursor: pointer;
+            width: 50%;
+        }
+
+        .userName {
+            /* background-color: blueviolet; */
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            width: 50%;
+            /* padding: 5px; */
+        }
+
+        .userName input {
+            padding: 10px;
+            border: none;
+            box-shadow: 0px 0px 3px 0px inset;
+            outline: none;
+            border-radius: 5px;
+        }
+
+        .userName input:focus {
+            outline: 1px solid rgba(0, 0, 0, 0.46);
+        }
+
+        .importantButtons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .importantButtons button{
+            padding: 7px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: black;
+            color: white;
+            transition: 0.3s all ease-in-out;
+            text-decoration: none;
+        }
+
+        .importantButtons button:hover {
+            background-color: green;
+        }
+
+        #deleteButton button{
+            background-color: white;
+            padding: 0.4rem;
+            color: black;
+            border-radius: 5px;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            border: none;
+            font-weight: 600;
+        }
+
+        #deleteButton button:hover{
+            background-color: red;
+            color: white;
+        }
+
+
+        @media(max-width:1024px){
+            .updateUser{
+                width: 80vw;
+            }
+        }
+
+        @media(max-width:650px){
+            .updateUser{
+                flex-direction: column;
+                width: 95vw;
+                align-items: center;
+                height: 70vh;
+                padding: 10px;
+            }
+
+            .userImage{
+                display: flex;
+                height: 50%;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .userName{
+                gap: 1rem;
+                height: 50%;
+                justify-content: center;
+            }
+
+        }
+
+        @media(max-width:500px){
+
+            .userImage{
+                width: 80%;
+            }
+
+            .userImage img{
+                width: 150px;
+                height: 150px;
+            }
+
+            .userName{
+                width: 80%;
+                flex-direction: column;
+            }
+
+            .userName button{
+                padding: 0.4rem;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/user/profile" class="backIcon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
+        fill="white">
+        <path
+            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+    </svg>
+</a>
+    <form action="/user/updateuser?_method=PUT" class="updateUser" method="post" enctype="multipart/form-data">
+
+        <div class="userImage">
+            <input type="file" id="file-input" accept="image/*" style="display: none;" name="userProfileImage">
+
+            <label for="file-input" id="userImageLabel">
+                <img src="<%= user.userProfileImage ? user.userProfileImage : '../images/user.png' %>" alt="User Image" id="userImage">
+            </label>
+        </div>
+
+        <div class="userName">
+            <input type="text" id="username" value="<%= user.name %>" name="name">
+            <div class="importantButtons">
+                <button type="submit" id="updateButton">Update</button>
+            </div>
+        </div>
+        
+    </form>
+    
+    <form action="/user/account/delete?_method=DELETE" method="post" id="deleteButton">
+        <button type="submit" id="deleteButton">Delete account</button>
+    </form>
+
+    <script>
+        const fileInput = document.querySelector("#file-input");
+        const userImage = document.querySelector("#userImage");
+        const DeleteProfile = document.querySelector("#deleteButton"); 
+
+        fileInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    userImage.src = e.target.result;
+                    userImage.style.display = 'block';
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                userImage.style.display = 'none';
+            }
+        });
+
+        DeleteProfile.addEventListener('click', () => {
+            confirm("Confirm if you really want to delete your account !");
+        });
+
+
+    </script>
+</body>
+
+</html>
