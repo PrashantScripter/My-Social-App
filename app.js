@@ -8,6 +8,9 @@ const cookieParser = require('cookie-parser');
 const Post = require('./models/Post');
 const authenticate = require('./middlewares/authenticate');
 const methodOverride = require('method-override');
+const cors = require('cors')
+
+ 
 
 
 if(process.env.NODE_ENV !== "production"){
@@ -21,7 +24,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.resolve('./views'));
 
-
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -90,6 +90,13 @@
             rotate: 180deg;
         }
 
+        @media(max-width:1024px){
+            .leftSideMenuBar {
+                justify-content:unset;
+                gap: 5rem;
+            }
+        }
+
         @media(width <=900px) {
 
             .login {
@@ -106,6 +113,7 @@
         @media(width <=700px) {
             .leftSideMenuBar {
                 position: fixed;
+                height: 500px;
                 left: -200px;
                 width: 200px;
                 overflow: hidden;
