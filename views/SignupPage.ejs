@@ -83,6 +83,22 @@
             margin-left: auto;
         }
 
+        .userInput-Side form h2 {
+            font-size: 1.3rem;
+            margin-bottom: 0;
+        }
+
+        @media(width <=900px) {
+            .SignUpPage {
+                width: 100vw;
+            }
+
+            .userInput-Side form {
+                margin-top: 7rem;
+                padding: 1rem;
+            }
+        }
+
         @media (width <=800px) {
             .loginGraphics img {
                 display: none;
@@ -97,33 +113,17 @@
             }
         }
 
-        @media(width <=700px) {
-            .SignUpPage {
-                width: 100vw;
-            }
-            
+
+        @media(width <=500px) {
             .userInput-Side form {
-                margin-top: 7rem;
-                padding: 1rem;
+                width: 90%;
             }
-
-            @media(width <=500px) {
-                .userInput-Side form {
-                    width: 90%;
-                }
-            }
-
-            .userInput-Side form h2 {
-                font-size: 1.3rem;
-                margin-bottom: 0;
-            }
-
         }
     </style>
 </head>
 
 <body>
-    <%-include('./partials/sideMenuBar') %>
+    <%-include( './partials/sideMenuBar' ) %>
         <div class="SignUpPage">
             <div class="userInput-Side">
                 <form action="/user/signup" method="post">

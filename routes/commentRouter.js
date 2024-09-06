@@ -12,6 +12,7 @@ router.route('/:id').post(postComment).get(authenticate, async (req, res) => {
     const postId = req.params.id;
     const post = await Post.findById(postId);
     const postOwner = await User.findById(post.createdBy);
+    const loggedInUserId = req.user.userId;
 
     const CommentOnPost = await Promise.all(
         post.comments.map(async (commentId) => {
@@ -25,7 +26,7 @@ router.route('/:id').post(postComment).get(authenticate, async (req, res) => {
         })
     );
 
-    res.render('CommentOnPost', { post, postOwner, postId, CommentOnPost });
+    res.render('CommentOnPost', { post, postOwner, postId, CommentOnPost, loggedInUserId });
 });
 
 router.delete('/delete/:id', deleteComment);

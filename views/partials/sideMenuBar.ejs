@@ -23,7 +23,7 @@
             justify-content: space-between;
             border-right: 1px solid rgba(0, 0, 0, 0.187);
             width: 20vw;
-            height: 100vh;
+            height: 100%;
             align-items: center;
             padding: 2rem 1rem;
             transition: all 0.4s ease-in-out;
@@ -128,33 +128,9 @@
                 font-size: 0.9rem;
             }
 
-
-        }
-
-
-        @media(width <=700px) {
-            /* .leftSideMenuBar {
-                position: fixed;
-                left: -200px;
-                width: 200px;
-                overflow: hidden;
-                z-index: 99;
-            } */
-
             .slidingMenu {
                 left: 0px;
             }
-
-            /* .hamburger {
-                width: 100vw;
-                background-color: white;
-                display: flex;
-                position: fixed;
-                top: 0;
-                z-index: 1;
-                padding: 1rem;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.139);
-            } */
 
         }
     </style>
@@ -195,10 +171,12 @@
     const leftSideMenuBar = document.querySelector('.leftSideMenuBar');
     const hamburger = document.querySelector('.hamburger span');
     const slidingMenu = document.querySelector('.slidingMenu');
+    const body = document.querySelector('body');
 
     hamburger.addEventListener('click', () => {
         leftSideMenuBar.classList.toggle('slidingMenu');
     });
+
 
 
 </script>

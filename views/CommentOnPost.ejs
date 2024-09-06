@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>SocialLoop</title>
 
     <style>
-
-        *{
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -122,18 +122,18 @@
             position: relative;
         }
 
-        .commentDelete{
+        .commentDelete {
             position: absolute;
             right: 10px;
         }
 
-        .commentDelete button{
+        .commentDelete button {
             background-color: white;
             border: none;
             cursor: pointer;
         }
 
-        .commentDelete button:hover{
+        .commentDelete button:hover {
             color: red;
         }
 
@@ -142,35 +142,42 @@
             height: 45px;
         }
 
-        @media(max-width: 800px){
-            .postComment{
+        @media(max-width: 800px) {
+            .postComment {
                 width: 95vw;
             }
         }
 
-        @media(max-width:700px){
-            .postImg{
+        @media(max-width:700px) {
+            .postImg {
                 display: none;
             }
 
-            .rightArea{
+            .rightArea {
                 width: 100%;
             }
         }
 
-        @media(max-width: 400px){
-            .comment p{
+        @media(max-width:500px) {
+            .commentTypingArea form button {
+                width: 20%;
+            }
+        }
+
+        @media(max-width: 400px) {
+            .comment p {
                 font-size: 0.8rem;
             }
 
-            .comment{
+            .comment {
                 gap: 5px;
             }
 
-            .comment img{
+            .comment img {
                 width: 40px;
                 height: 40px;
             }
+
         }
     </style>
 </head>
@@ -206,10 +213,13 @@
                                 <%= Comment.comment %>
                             </p>
 
-                            <form action="/comment/delete/<%= Comment._id %>?_method=DELETE" method="post" class="commentDelete">
+                            <form action="/comment/delete/<%= Comment._id %>?_method=DELETE" method="post"
+                                class="commentDelete">
+                                <% if(Comment.createdBy.toString() === loggedInUserId.toString()){ %>
                                 <button type="submit"><span class="material-symbols-outlined">delete</span></button>
+                                <% } %>
                             </form>
-                            
+
                         </div>
                         <% }) %>
                 </div>
@@ -223,8 +233,8 @@
         </div>
     </section>
 
-
-
+    <script>
+    </script>
 </body>
 
 </html>
