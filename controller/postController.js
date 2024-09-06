@@ -1,22 +1,36 @@
+require('dotenv').config();
 const Post = require('../models/Post');
-const multer = require('multer');
-const path = require('path');
 const authenticate = require('../middlewares/authenticate');
+const multer = require('multer');
+const { v2: cloudinary } = require('cloudinary');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const fs = require('fs')
 const User = require('../models/User');
-const fs = require('fs');
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, path.resolve('./public/uploads'));
-    },
 
-    filename: function (req, file, cb) {
-        const fileName = `${Date.now()}-${file.originalname}`;
-        cb(null, fileName);
+// configure cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+//configure cloudinary storage for multer
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'uploads',
+        allowed_formats: ['jpg', 'png', 'jpeg'],
+        public_id: (req, file) => file.originalname.split('.')[0],
     },
 });
 
+
+
+// Initialize Multer with Cloudinary storage
 const upload = multer({ storage: storage });
+
 
 exports.createPost = [
     authenticate,
@@ -24,35 +38,32 @@ exports.createPost = [
     async (req, res) => {
         const { description } = req.body;
 
-        if (!req.user) {
-            return res.status(401).redirect('/user/signin').json({ success: false, message: "User not authenticated" });
-        }
-
         if (!req.file) {
-            return res.status(400).json({ success: false, message: "Please choose an image first" });
+            return res.status(400).send('No file uploaded.');
         }
 
         try {
             const newPost = new Post({
                 description,
                 createdBy: req.user.userId,
-                postImage: `/uploads/${req.file.filename}`,
+                postImage: req.file.path,
             });
 
             const savedPost = await newPost.save();
 
-
             const user = await User.findById(req.user.userId);
-            user.posts.push(savedPost._id);
 
+            if (!user) {
+                return res.status(404).send('User not found.');
+            }
+
+            user.posts.push(savedPost._id);
             await user.save();
 
             return res.redirect('/')
-            // .status(201)
-            // .json({ success: true, message: "Post created successfully" });
 
         } catch (err) {
-            res.status(500).json({ success: false, message: err.message });
+            console.log(err);
         }
     }
 ];

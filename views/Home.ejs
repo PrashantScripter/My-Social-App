@@ -17,6 +17,7 @@
 
         .home {
             display: flex;
+            flex-direction: column;
             overflow-y: scroll;
             /* background-color: yellow; */
         }
@@ -95,7 +96,7 @@
         }
 
         .post-description {
-            
+
             padding: 10px;
             overflow-y: scroll;
         }
@@ -109,10 +110,47 @@
             font-weight: 200;
         }
 
-        @media (max-width:700px) {
+        .specificPost {
+            position: fixed;
+            z-index: 2;
+            display: none;
+        }
+
+        .footer{
+            /* background-color: yellow; */
+            width: 80%;
+            margin-left:auto;
+            padding: 10px;
+            border-top: 1px solid rgba(0, 0, 0, 0.167);
+        }
+
+        .copyright{
+            /* background-color: green; */
+            padding: 10px;            
+        }
+        
+        .copyright p{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 200;
+        }
+
+        .copyright span{
+            padding: 0px 5px;
+            font-weight: 300;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width:900px) {
             .postArea {
                 width: 100vw;
                 padding-top: 8rem;
+            }
+
+            .footer{
+                width: 100%;
             }
 
         }
@@ -122,13 +160,13 @@
                 width: 99vw;
                 height: 500px;
             }
+
+            .copyright p{
+                font-size: 0.7rem;
+            }
         }
 
-        .specificPost {
-            position: fixed;
-            z-index: 2;
-            display: none;
-        }
+
     </style>
 </head>
 
@@ -176,12 +214,16 @@
                         </div>
                     </div>
                     <% }) %>
+
+            </div>
+            <div class="footer">
+                <div class="copyright">
+                    <p>2024 <span class="material-symbols-outlined">
+                            copyright
+                        </span> all reserved by Prashant Thakur</p>
+                </div>
             </div>
     </div>
-
-    <script>
-
-    </script>
 
 </body>
 

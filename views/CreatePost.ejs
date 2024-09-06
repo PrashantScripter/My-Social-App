@@ -24,8 +24,8 @@
         .createPost {
             display: flex;
             /* background-color: aqua; */
-            width: 70%;
-            height: 60%;
+            width: 800px;
+            height: 400px;
             margin: auto;
             box-shadow: 0px 0px 1px 0px;
             border-radius: 10px;
@@ -104,11 +104,33 @@
             cursor: pointer;
         }
 
+        @media(max-width:1024px){
+            .createPost{
+                width: 650px;
+            }
+        }
+
+        @media(max-width:900px) {
+            .createPostArea {
+                width: 100%;
+            }
+
+            .createPost {
+                height: 60vh;
+                margin-top: 6.5rem;
+            }
+
+            .descriptionArea textarea {
+                border-bottom: none;
+            }
+        }
+
+
         @media(max-width:800px) {
 
             .createPost {
-                height: 500px;
                 width: 400px;
+                height: 400px;
             }
 
             .createPost form {
@@ -127,33 +149,13 @@
                 height: 40%;
             }
 
-            .descriptionArea p{
+            .descriptionArea p {
                 border-top: 1px solid rgba(0, 0, 0, 0.156);
                 font-size: 0.8rem;
             }
         }
 
-        @media(max-width:700px) {
-            .createPostArea {
-                width: 100%;
-            }
-
-            .createPost {
-                height: 60vh;
-                margin-top: 6.5rem;
-            }
-
-            .descriptionArea textarea {
-                border-bottom: none;
-            }
-        }
-
         @media(max-width:600px) {
-            .createPost {
-                width: 70%;
-                height: 60%;
-            }
-
             .descriptionArea p {
                 padding: 5px;
             }
@@ -165,7 +167,7 @@
                 width: 98%;
             }
 
-            .descriptionArea p{
+            .descriptionArea p {
                 border-top: 1px solid rgba(2, 2, 2, 0.174);
                 font-size: 0.8rem;
             }
@@ -174,7 +176,7 @@
 </head>
 
 <body>
-    <%-include( './partials/sideMenuBar',{user}) %>
+    <%-include( './partials/sideMenuBar' ,{user}) %>
         <section class="createPostArea">
             <div class="createPost">
                 <form action="/user/post/create" method="post" enctype="multipart/form-data">
@@ -213,7 +215,7 @@
                         uploadLabel.style.display = 'none';
                     };
 
-                    reader.readAsDataURL(file); 
+                    reader.readAsDataURL(file);
                 } else {
                     previewImage.style.display = 'none';
                     uploadLabel.style.display = 'block';
@@ -221,4 +223,5 @@
             });
         </script>
 </body>
+
 </html>
