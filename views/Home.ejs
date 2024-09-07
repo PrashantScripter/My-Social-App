@@ -175,7 +175,9 @@
                                         people</p>
                             </span>
                             <form action="/user/post/delete/<%=post._id%>?_method=DELETE" method="post" id="delete">
-                                <button type="submit"><span class="material-symbols-outlined">delete</span></button>
+                                <%if(loggedInUserId.toString() === post.createdBy.toString()){ %>
+                                    <button type="submit"><span class="material-symbols-outlined">delete</span></button>
+                                <% } %>
                             </form>
                         </div>
                         <div class="post-description">

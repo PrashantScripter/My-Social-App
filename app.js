@@ -36,9 +36,11 @@ app.use(methodOverride('_method'));
 
 app.get('/',authenticate, async(req, res) => {
     const allPosts = await Post.find({});
+    const loggedInUserId = req.user.userId;
     res.render('Home',{
         user: req.user,
         post: allPosts,
+        loggedInUserId,
     });
 });
 
