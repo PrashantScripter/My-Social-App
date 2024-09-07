@@ -106,7 +106,7 @@
             background-color: green;
         }
 
-        #deleteButton button{
+        #deleteForm button{
             background-color: white;
             padding: 0.4rem;
             color: black;
@@ -120,7 +120,7 @@
             font-weight: 600;
         }
 
-        #deleteButton button:hover{
+        #deleteForm button:hover{
             background-color: red;
             color: white;
         }
@@ -206,14 +206,15 @@
         
     </form>
     
-    <form action="/user/account/delete?_method=DELETE" method="post" id="deleteButton">
+    <form action="/user/account/delete?_method=DELETE" method="post" id="deleteForm">
         <button type="submit" id="deleteButton">Delete account</button>
     </form>
 
     <script>
         const fileInput = document.querySelector("#file-input");
         const userImage = document.querySelector("#userImage");
-        const DeleteProfile = document.querySelector("#deleteButton"); 
+        const deleteButton = document.querySelector("#deleteButton"); 
+        const deleteForm = document.querySelector("#deleteForm");
 
         fileInput.addEventListener('change', function (e) {
             const file = e.target.files[0];
@@ -230,8 +231,17 @@
             }
         });
 
-        DeleteProfile.addEventListener('click', () => {
-            confirm("Confirm if you really want to delete your account !");
+        deleteButton.addEventListener('click', function(event){
+            event.preventDefault();
+
+            const isConfirmed = confirm("Are you sure you want to delete your account? This action cannot be undone!");
+
+            if(isConfirmed){
+                deleteButton.submit();
+            }
+            else{
+                console.log("Account deletion canceled.");
+            }
         });
 
 

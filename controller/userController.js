@@ -3,24 +3,33 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authenticate = require('../middlewares/authenticate');
 const multer = require('multer');
-const path = require('path');
 const Post = require('../models/Post');
 const Comment = require('../models/Comment');
+const { v2: cloudinary } = require('cloudinary');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 
+// configure cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
+//configure cloudinary storage for multer
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, path.resolve('./public/uploads'));
-    },
-
-    filename: function (req, file, cb) {
-        const fileName = `${Date.now()}-${file.originalname}`;
-        cb(null, fileName);
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'uploads',
+        allowed_formats: ['jpg', 'png', 'jpeg'],
+        public_id: (req, file) => file.originalname.split('.')[0],
     },
 });
 
+
+
+// Initialize Multer with Cloudinary storage
 const upload = multer({ storage: storage });
 
 
@@ -183,7 +192,7 @@ exports.updateUser = [
 
             // If an image is uploaded, update the profile image
             if (updatedImage) {
-                user.userProfileImage = `/uploads/${updatedImage}`;  // Save new image path
+                user.userProfileImage = req.file.path;  // Save new image path
             }
 
             // Save updated user
