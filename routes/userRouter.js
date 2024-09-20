@@ -14,6 +14,14 @@ router.get('/profile', authenticate, async (req, res) => {
     return res.render('UserProfile',{posts,user:userId, userDetail});
 });
 
+router.get('/profile/:id', authenticate, async(req, res) => {
+    const userId = req.user.userId;
+    const specificUserId = req.params.id;
+    const userDetail = await User.findById(specificUserId);
+    const posts = await Post.find({createdBy:userDetail});
+    return res.render('GetUserProfile',{posts,user:userId, userDetail});
+})
+
 router.get('/suggestion', authenticate, async(req, res) => {
     const loggedInUserId = req.user.userId;
     const loggedInUser = await User.findById(loggedInUserId);

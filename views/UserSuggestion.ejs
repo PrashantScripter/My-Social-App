@@ -52,8 +52,8 @@
             box-shadow: 0px 0px 1px 0px;
         }
 
-        .user form button,
-        .user a {
+        .user form button
+        {
             padding: 5px 10px;
             text-decoration: none;
             color: white;
@@ -69,6 +69,7 @@
         }
 
         .userImg img {
+            border-radius: 100%;
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -111,11 +112,11 @@
                 <% allUsers.forEach(function(User){ %>
                     <div class="user">
                         <div class="userImg">
-                            <img src="../images/user.png" alt="">
+                            <img src="<%= User.userProfileImage %>" alt="">
                         </div>
-                        <p>
+                        <a style="color: rgba(0, 0, 0, 0.978); text-decoration:underline;" href="/user/profile/<%=User._id%>">
                             <%= User.name %>
-                        </p>
+                        </a>
                         <%if(User._id !=user){%>
                                 <form action="/user/follow/<%=User._id %>" method="post">
                                     <% const isFollowing = loggedInUser.following.some(followedUser => followedUser.toString() === User._id.toString()); %>
@@ -131,8 +132,7 @@
                                     <% } %>
                                 </form>
                             <%}else{%>
-                                <a href="/user/profile"
-                                    style="background-color: rgb(220, 220, 220); color: black;">Profile</a>
+                                <a  style="padding: 5px 10px; background-color:rgb(220, 220, 220); text-decoration: none; color: black; border-radius: 5px;" href="/user/profile">Profile</a>
                             <%}%>
                     </div>
                     <% }) %>
