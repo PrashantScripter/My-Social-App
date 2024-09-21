@@ -15,7 +15,7 @@
         .userProfile {
             display: flex;
             flex-direction: column;
-            gap:1rem;
+            gap: 1rem;
             /* background-color: rgb(111, 111, 150); */
             height: 100%;
             width: 80vw;
@@ -52,7 +52,7 @@
             justify-content: center;
         }
 
-        .userName{
+        .userName {
             width: 100%;
             display: flex;
             gap: 10px;
@@ -62,12 +62,12 @@
             align-items: center;
         }
 
-        .userName p{
+        .userName p {
             font-size: 1.1rem;
             font-weight: 500;
         }
 
-        .userName a{
+        .userName a {
             cursor: pointer;
             text-decoration: none;
             background-color: black;
@@ -77,7 +77,7 @@
             font-size: 1rem;
         }
 
-        .postC-followerC-followingC{
+        .postC-followerC-followingC {
             /* background-color: yellow; */
             display: flex;
             gap: 1rem;
@@ -153,20 +153,20 @@
                 font-size: 4vw;
             }
 
-            .userName a{
+            .userName a {
                 font-size: 4vw;
             }
 
-            .aboutUser{
+            .aboutUser {
                 padding: 0;
             }
 
-            .aboutUser img{
+            .aboutUser img {
                 width: 80px;
                 height: 80px;
             }
 
-            .userProfile{
+            .userProfile {
                 padding: 0;
             }
         }
@@ -174,19 +174,41 @@
 </head>
 
 <body>
-    <%-include('./partials/sideMenuBar') %>
+    <%-include('./partials/sideMenuBar', {user:loggedInUser}) %>
         <section class="userProfile">
             <div class="aboutUser">
                 <img src="<%= userDetail.userProfileImage %>" alt="">
                 <div class="post-follower-following">
                     <div class="userName">
-                        <p><%= userDetail.name %></p>
-                        <a href="/user/updateuser">Edit profile</a>
+                        <p>
+                            <%= userDetail.name %>
+                        </p>
+                        <% if(loggedInUser._id.toString() === userDetail._id.toString()){ %>
+                            <a href="/user/updateuser">Edit profile</a>
+                        <% }else{ %>
+                            <form action="/user/follow/<%=userDetail._id %>" method="post">
+                                <% if(isFollowing){ %>
+                                        <button type="submit" style="background-color: rgb(220, 220, 220); color: black; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Unfollow</button>
+                                <% }else{ %>
+                                        <% if(isYourFollower){ %>
+                                            <button style="background-color: black; border: none; background-color: black; color: white; padding: 5px 10px; border-radius: 5px; cursor: pointer;" type="submit">Follow Back</button>
+                                        <% }else{ %>
+                                            <button style="background-color: black; border: none; background-color: black; color: white; padding: 5px 10px; border-radius: 5px; cursor: pointer;" type="submit" style="padding: 5px 15.5px;">Follow</button>
+                                        <%  } %>
+                                <% } %>
+                            </form>
+                            <%}%>
                     </div>
                     <div class="postC-followerC-followingC">
-                        <p><%= userDetail.posts.length %><br>Post</p>
-                        <p><%= userDetail.followers.length %><br>Followers</p>
-                        <p><%= userDetail.following.length %><br>Following</p>
+                        <p>
+                            <%= userDetail.posts.length %><br>Post
+                        </p>
+                        <p>
+                            <%= userDetail.followers.length %><br>Followers
+                        </p>
+                        <p>
+                            <%= userDetail.following.length %><br>Following
+                        </p>
                     </div>
                 </div>
             </div>
@@ -195,9 +217,9 @@
 
                     <% posts.forEach(function(post){ %>
                         <div class="post">
-                            <img src="<%= post.postImage %>"alt="">
+                            <img src="<%= post.postImage %>" alt="">
                         </div>
-                    <% }) %>
+                        <% }) %>
 
                 </div>
             </div>

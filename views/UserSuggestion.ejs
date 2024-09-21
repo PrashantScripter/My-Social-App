@@ -55,6 +55,7 @@
         .user form button
         {
             padding: 5px 10px;
+            border: none;
             text-decoration: none;
             color: white;
             background-color: black;
@@ -114,7 +115,7 @@
                         <div class="userImg">
                             <img src="<%= User.userProfileImage %>" alt="">
                         </div>
-                        <a style="color: rgba(0, 0, 0, 0.978); text-decoration:underline;" href="/user/profile/<%=User._id%>">
+                        <a style="color: rgba(0, 0, 0, 0.978); text-decoration:none; padding: 1px; border-bottom: 1px solid black;" href="/user/profile/<%=User._id%>">
                             <%= User.name %>
                         </a>
                         <%if(User._id !=user){%>
